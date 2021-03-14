@@ -1,0 +1,71 @@
+* {box-sizing: border-box}
+
+  input[type=text], input[type=password] {
+  width: 25%;
+  padding: 10px;
+  margin: 5px 0 18px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+form {
+  text-align: center;
+}
+
+hr {
+  border: 1px solid #444444;
+  margin-bottom: 25px;
+}
+
+
+button {
+  background-color: #e2212f;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+
+.cancelbtn {
+  padding: 10px 15px;
+  background-color: #f44336;
+}
+
+
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 25%;
+}
+
+
+.container {
+  padding: 15px;
+}
+
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+    width: 50%;
+  }
+}
