@@ -17,6 +17,7 @@ const loginUser = ({ userRepository }) => async (userData) => {
     }
 
     const tokenData = {
+      id: user._id,
       email: user.email,
       role: user.role,
       firstName: user.firstName,

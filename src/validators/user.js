@@ -8,6 +8,8 @@ class userValidator {
       firstName: Joi.string().required(),
       phoneNumber: Joi.number().required(),
       email: Joi.string().email(),
+      genotype: Joi.string().required(),
+      bloodGroup: Joi.string().required(),
       password: Joi.string().required(),
       role: Joi.string()
         .valid("user", "doctor")

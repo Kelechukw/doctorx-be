@@ -17,6 +17,7 @@ const createUser = ({ userRepository }) => async (userData) => {
     const user = await userRepository.add(data);
 
     const tokenData = {
+      id: user._id,
       email: user.email,
       role: user.role,
       firstName: user.firstName,

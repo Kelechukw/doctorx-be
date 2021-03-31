@@ -8,14 +8,4 @@ export default class extends BaseRepo {
     super(Model);
     this.Model = Model;
   }
-
-  findByEmail(email) {
-    return this.Model.findOne({ email }).exec();
-  }
-
-  getAllUsers() {
-    return this.all({
-      // role: "user",
-    });
-  }
 }

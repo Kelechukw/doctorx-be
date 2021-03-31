@@ -16,4 +16,5 @@ const startServer = async () => {
   webserver.start();
 };
 
+// startServer();
 database.connect(startServer);

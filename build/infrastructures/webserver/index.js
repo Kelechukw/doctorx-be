@@ -13,12 +13,20 @@ var _expressForceHttps = _interopRequireDefault(require("express-force-https"));
 
 var _cors = _interopRequireDefault(require("cors"));
 
+var _http = _interopRequireDefault(require("http"));
+
+var _websocket = _interopRequireDefault(require("../websocket"));
+
 var _env = _interopRequireDefault(require("../../config/env"));
 
 var _errorHandler = _interopRequireDefault(require("./errorHandler"));
 
 var _default = function _default(router) {
   var app = (0, _express["default"])();
+
+  var server = _http["default"].createServer(app);
+
+  (0, _websocket["default"])(server);
   app.disable("x-powered-by");
   app.use(_expressForceHttps["default"]).use((0, _cors["default"])());
   app.use(_express["default"].json());

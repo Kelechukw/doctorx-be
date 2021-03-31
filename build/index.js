@@ -43,4 +43,4 @@ var startServer = /*#__PURE__*/function () {
   };
 }();
 
-database.connect(startServer);
+startServer(); // database.connect(startServer);

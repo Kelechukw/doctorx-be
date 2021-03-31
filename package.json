@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir build --copy-files",
     "dev": "nodemon --exec NODE_ENV=development babel-node  ./src/index",
-    "start": "npm run build && NODE_ENV=prod node ./build/index.js"
+    "start": "NODE_ENV=prod node ./build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^5.10.9",
+    "socket.io": "^4.0.0",
     "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@ const config = {
     dev: process.env.MONGODB_DEV_URL,
     test: process.env.MONGODB_TEST_URL,
   },
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 4000,
   JWTSecret: process.env.JWTSecret,
   nodeEnv: process.env.NODE_ENV,
 };

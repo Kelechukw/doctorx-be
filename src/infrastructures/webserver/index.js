@@ -1,6 +1,8 @@
 import express from "express";
 import secure from "express-force-https";
 import cors from "cors";
+import http from "http";
+import webSocketWorker from "../websocket";
 
 import config from "../../config/env";
 import errorHandler from "./errorHandler";
@@ -17,13 +19,15 @@ export default (router) => {
   app.use(router);
 
   errorHandler(app);
+  const server = http.createServer(app);
+  webSocketWorker(server);
 
   const applyMiddleware = (middleware) => {
     app.use(middleware);
   };
 
   const start = () => {
-    app.listen(config.PORT, () => {
+    server.listen(config.PORT, () => {
       console.log("App started at " + config.PORT);
     });
   };
