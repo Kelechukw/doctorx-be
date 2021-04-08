@@ -1,7 +1,7 @@
-import CustomError from "../../../module/error";
-import isValidId from "../../../module/isValidId";
+const CustomError = require("../../../module/error");
+const isValidId = require("../../../module/isValidId");
 
-export default class BaseRepo {
+module.exports = class BaseRepo {
   constructor(Model) {
     this.Model = Model;
   }
@@ -65,4 +65,4 @@ export default class BaseRepo {
   removeall() {
     return this.Model.deleteMany({}).exec();
   }
-}
+};

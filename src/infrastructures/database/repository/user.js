@@ -1,9 +1,7 @@
-import BaseRepo from "./base";
-import isValidId from "../../../module/isValidId";
-import CustomError from "../../../module/error";
-import moment from "moment";
+const BaseRepo = require("./base");
+const moment = require("moment");
 
-export default class extends BaseRepo {
+module.exports = class extends BaseRepo {
   constructor(Model) {
     super(Model);
     this.Model = Model;
@@ -18,4 +16,4 @@ export default class extends BaseRepo {
       // role: "user",
     });
   }
-}
+};

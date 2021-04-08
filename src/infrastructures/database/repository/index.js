@@ -1,5 +1,5 @@
-import UserRepository from "./user";
-import ChatRepository from "./chat";
+const UserRepository = require("./user");
+const ChatRepository = require("./chat");
 
 const Repository = (models) => {
   return {
