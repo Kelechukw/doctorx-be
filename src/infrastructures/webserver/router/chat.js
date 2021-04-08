@@ -5,7 +5,7 @@ const chatRouter = (repositories) => {
   const chatController = controller(repositories);
   const router = Router();
 
-  router.post("/getallconversation", chatController.getAllConversations);
+  router.get("/getallconversation", chatController.getAllConversations);
 
   return router;
 };
