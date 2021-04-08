@@ -6,6 +6,7 @@ import webSocketWorker from "../websocket";
 
 import config from "../../config/env";
 import errorHandler from "./errorHandler";
+import Repository from "../database/repository";
 
 export default (router) => {
   const app = express();
@@ -20,7 +21,10 @@ export default (router) => {
 
   errorHandler(app);
   const server = http.createServer(app);
-  webSocketWorker(server);
+
+  const startWebsocket = (repository) => {
+    webSocketWorker(server, repository);
+  };
 
   const applyMiddleware = (middleware) => {
     app.use(middleware);
@@ -36,5 +40,6 @@ export default (router) => {
   return {
     start,
     applyMiddleware,
+    startWebsocket,
   };
 };

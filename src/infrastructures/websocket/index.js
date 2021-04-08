@@ -10,7 +10,7 @@ import {
 } from "./room";
 import publishToQueue from "../queue/publisher";
 
-const webSocket = (server) => {
+const webSocket = (server, repositories) => {
   const io = socketio(server, {
     cors: {
       origin: "*",
@@ -99,7 +99,8 @@ const webSocket = (server) => {
           to: to.id,
           message,
         };
-        publishToQueue(msgToQ);
+        // publishToQueue(msgToQ);
+        await repositories.chatRepository.add(message);
       }
 
       callback();
