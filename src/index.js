@@ -18,7 +18,5 @@ const start = async () => {
   webserver.startWebsocket(repositories);
 };
 
-// startServer();
-
 database.connect(start);
-MQWorkerProcess();
+// MQWorkerProcess();
