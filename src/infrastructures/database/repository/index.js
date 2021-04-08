@@ -1,5 +1,5 @@
-const UserRepository = require("./user");
-const ChatRepository = require("./chat");
+import UserRepository from "./user";
+import ChatRepository from "./chat";
 
 const Repository = (models) => {
   return {
@@ -8,4 +8,4 @@ const Repository = (models) => {
   };
 };
 
-module.exports = Repository;
+export default Repository;

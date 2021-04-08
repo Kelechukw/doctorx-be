@@ -1,6 +1,6 @@
-const BaseRepo = require("./base");
+import BaseRepo from "./base";
 
-module.exports = class extends BaseRepo {
+export default class extends BaseRepo {
   constructor(Model) {
     super(Model);
     this.Model = Model;
@@ -34,4 +34,4 @@ module.exports = class extends BaseRepo {
 
     return await this.Model.aggregate(pipeline);
   }
-};
+}
