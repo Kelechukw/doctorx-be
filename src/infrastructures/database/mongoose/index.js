@@ -35,7 +35,7 @@ class Database {
       });
       mongoose.connection.once("open", async () => {
         console.log("database connected");
-        await cb();
+        cb();
       });
     } catch (error) {
       console.error(error);

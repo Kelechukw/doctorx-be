@@ -10,6 +10,9 @@ const config = {
   PORT: process.env.PORT || 4000,
   JWTSecret: process.env.JWTSecret,
   nodeEnv: process.env.NODE_ENV,
+  AMQPURL: process.env.AMQP_URL,
+  redisHost: process.env.REDISCACHEHOSTNAME,
+  redisPass: process.env.REDISCACHEKEY,
 };
 
 export default config;

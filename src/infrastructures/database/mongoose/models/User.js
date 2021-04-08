@@ -30,16 +30,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    //  exam of interest
-    regExam: {
-      examId: {
-        type: Schema.Types.ObjectId,
-        default: null,
-      },
-      subjectCombination: {
-        type: Array,
-        default: [],
-      },
+    bloodGroup: {
+      type: String,
+      required: true,
+    },
+    genotype: {
+      type: String,
+      required: true,
     },
   },
   {

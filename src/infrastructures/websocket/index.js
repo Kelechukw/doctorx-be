@@ -1,11 +1,14 @@
-const socketio = require("socket.io");
+import socketio from "socket.io";
 import {
   joinRoom,
-  getUser,
   getUsersInWaitingRoom,
   leaveRoom,
   formatMessage,
+  getUserInRoom,
+  getRoom,
+  getUser,
 } from "./room";
+import publishToQueue from "../queue/publisher";
 
 const webSocket = (server) => {
   const io = socketio(server, {
@@ -16,62 +19,88 @@ const webSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
-    socket.on("join", ({ name, userId, room, isRoom }, callback) => {
-      console.log("new socket connect");
+    socket.on(
+      "join",
+      async ({ name, userId, room, userRole, isRoom }, callback) => {
+        console.log("new socket connect");
+        const { error, user, isNew } = await joinRoom({
+          id: userId,
+          name,
+          roomId: room,
+          userRole,
+          socketId: socket.id,
+        });
 
-      const { error, user, isNew } = joinRoom({
-        id: userId,
-        name,
-        room,
-      });
+        if (error) return callback(error);
 
-      if (error) return callback(error);
+        socket.join(room);
 
-      socket.join(user.room);
+        if (isRoom) {
+          const usersInRoom = await getRoom(room);
+          const to = usersInRoom.find((user) => user.id !== userId);
+          const text =
+            user.userRole === "doctor"
+              ? `Welcome ${user.name} to a chat with ${to.name}`
+              : `welcome ${user.name}, a doctor will join the chat soon.`;
+          socket.emit(
+            "message",
+            formatMessage({
+              user: "admin",
+              text,
+            })
+          );
+        }
 
-      if (isRoom && isNew) {
-        socket.emit(
+        socket.broadcast.to(room).emit(
           "message",
           formatMessage({
             user: "admin",
-            text: `welcome ${user.name}, a doctor will join the chat soon.`,
+            text: `${user.userRole === "doctor" ? "Dcotor" : ""} ${
+              user.name
+            }, joined the chat`,
           })
         );
 
-        socket.broadcast.to(user.room).emit(
-          "message",
-          formatMessage({
-            user: "admin",
-            text: `doctor ${user.name}, joined the chat`,
-          })
-        );
+        const userInWatingRoom = await getUsersInWaitingRoom();
+
+        io.emit("roomData", {
+          users: userInWatingRoom,
+        });
+
+        callback();
       }
+    );
 
-      io.emit("roomData", {
-        users: getUsersInWaitingRoom(),
+    socket.on("disconnect", async () => {
+      const user = await getUser(socket.id);
+      if (!user) return;
+      io.to(user.roomId).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
       });
-
-      socket.on("disconnect", () => {});
-      // if (user) {
-      //   io.to(user.room).emit("message", {
-      //     user: "Admin",
-      //     text: `${user.name} has left.`,
-      //   });
-      //   io.to(user.room).emit("roomData", {
-      //     room: user.room,
-      //     users: getUsersInRoom(user.room),
-      //   });
-      // }
-      callback();
+      socket.leave(user.roomId);
+      await leaveRoom(socket.id);
     });
 
-    socket.on("sendMessage", ({ message, room, userId }, callback) => {
-      const user = getUser(userId);
+    socket.on("sendMessage", async ({ message, room, userId }, callback) => {
+      const user = await getUser(socket.id);
+      const usersInRoom = await getRoom(room);
+      const to = usersInRoom.find((user) => user.id !== userId);
 
       io.to(room).emit(
         "message",
         formatMessage({ user: user.name, text: message })
       );
+
+      if (to) {
+        const msgToQ = {
+          conversationId: [to.id, userId].sort().join("."),
+          from: userId,
+          to: to.id,
+          message,
+        };
+        publishToQueue(msgToQ);
+      }
 
       callback();
     });
@@ -86,9 +115,11 @@ const webSocket = (server) => {
     //   });
     // });
 
-    socket.on("getRoom", () => {
+    socket.on("getRoom", async () => {
+      const userInWaitingRoom = await getUsersInWaitingRoom();
+
       io.emit("roomData", {
-        users: getUsersInWaitingRoom(),
+        users: userInWaitingRoom,
       });
     });
   });

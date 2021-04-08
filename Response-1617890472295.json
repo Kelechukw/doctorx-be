@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "message": "Conversation fetched successfully",
+  "data": [
+    {
+      "_id": "6064d4187d8bb266cda099ec605b21172fcff98253ca888f",
+      "to": "doctor doctor",
+      "from": "adam smith",
+      "message": "p[oijhgfhhhvsdddfjnghjhgjhuyh",
+      "timestamp": null
+    },
+    {
+      "_id": "605b21172fcff98253ca888f6064d4187d8bb266cda099ec",
+      "to": "adam smith",
+      "from": "doctor doctor",
+      "message": "[poig",
+      "timestamp": null
+    }
+  ]
+}

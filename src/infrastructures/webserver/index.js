@@ -27,6 +27,7 @@ export default (router) => {
   };
 
   const start = () => {
+    console.log("starting server");
     server.listen(config.PORT, () => {
       console.log("App started at " + config.PORT);
     });

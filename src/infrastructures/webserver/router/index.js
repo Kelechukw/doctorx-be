@@ -1,6 +1,8 @@
 import express from "express";
 import userRouter from "./user";
 
+import chatRouter from "./chat";
+
 import auth from "../middleware/auth";
 
 import swaggerUI from "swagger-ui-express";
@@ -13,6 +15,9 @@ const routerFunc = (repositories) => {
   apiRouter.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
   apiRouter.use("/auth", userRouter(repositories));
+
+  apiRouter.use("/", auth(repositories), chatRouter(repositories));
+
   router.use("/api", apiRouter);
 
   return router;

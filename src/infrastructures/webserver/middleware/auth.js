@@ -15,7 +15,7 @@ const getToken = (req) => {
   throw CustomError.AuthorizationError("Auth token malformed");
 };
 
-const auth = (userRepository) => async (req, res, next) => {
+const auth = ({ userRepository }) => async (req, res, next) => {
   try {
     const token = getToken(req);
 

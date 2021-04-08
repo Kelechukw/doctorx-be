@@ -13,7 +13,7 @@ module.exports = (app) => {
   if (!isProduction) {
     app.use((error, req, res, next) => {
       //   logger.error(err.stack);
-      console.log(error.message);
+      console.log(error);
       console.log(req.url);
       res.status(error.status || 500);
       res.json({
