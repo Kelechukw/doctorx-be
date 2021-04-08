@@ -1,4 +1,4 @@
-import { config as dotenvConfig } from "dotenv";
+const { config: dotenvConfig } = require("dotenv");
 dotenvConfig();
 
 const config = {
@@ -15,4 +15,4 @@ const config = {
   redisPass: process.env.REDISCACHEKEY,
 };
 
-export default config;
+module.exports = config;
