@@ -55,5 +55,4 @@ class Database {
     return dbModels;
   }
 }
-
-export default Database;
+module.exports = Database;

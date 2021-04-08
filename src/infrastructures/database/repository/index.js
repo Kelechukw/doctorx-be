@@ -8,4 +8,4 @@ const Repository = (models) => {
   };
 };
 
-export default Repository;
+module.exports = Repository;

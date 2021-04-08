@@ -1,7 +1,7 @@
-import amqplib from "amqplib";
-import config from "../../config/env";
-import Database from "../database/mongoose";
-import Repository from "../database/repository";
+const amqplib = require("amqplib");
+const config = require("../../config/env");
+const Database = require("../database/mongoose");
+const Repository = require("../database/repository");
 
 new Database().connect();
 
