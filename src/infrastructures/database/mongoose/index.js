@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
-import mongoose from "mongoose";
-import config from "../../../config/env";
+const fs = require("fs");
+const path = require("path");
+const mongoose = require("mongoose");
+const config = require("../../../config/env");
 
 const getDatabaseUri = () => {
   const nodeEnv = config.nodeEnv;
