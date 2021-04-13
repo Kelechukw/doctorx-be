@@ -45,6 +45,7 @@ const webSocket = (server, repositories) => {
           socket.emit(
             "message",
             formatMessage({
+              type: "text",
               user: "admin",
               text,
             })
@@ -55,6 +56,7 @@ const webSocket = (server, repositories) => {
           "message",
           formatMessage({
             user: "admin",
+            type: "text",
             text: `${user.userRole === "doctor" ? "Dcotor" : ""} ${
               user.name
             }, joined the chat`,
@@ -77,44 +79,47 @@ const webSocket = (server, repositories) => {
       io.to(user.roomId).emit("message", {
         user: "admin",
         text: `${user.name} has left.`,
+        type: "text",
       });
       socket.leave(user.roomId);
       await leaveRoom(socket.id);
+
+      const userInWaitingRoom = await getUsersInWaitingRoom();
+
+      io.emit("roomData", {
+        users: userInWaitingRoom,
+      });
     });
 
-    socket.on("sendMessage", async ({ message, room, userId }, callback) => {
-      const user = await getUser(socket.id);
-      const usersInRoom = await getRoom(room);
-      const to = usersInRoom.find((user) => user.id !== userId);
+    socket.on(
+      "sendMessage",
+      async ({ message, room, userId, type }, callback) => {
+        const user = await getUser(socket.id);
 
-      io.to(room).emit(
-        "message",
-        formatMessage({ user: user.name, text: message })
-      );
+        const usersInRoom = await getRoom(room);
 
-      if (to) {
-        const msgToQ = {
-          conversationId: [to.id, userId].sort().join("."),
-          from: userId,
-          to: to.id,
-          message,
-        };
-        // publishToQueue(msgToQ);
-        await repositories.chatRepository.add(message);
+        const to = usersInRoom.find((user) => user.id !== userId);
+
+        io.to(room).emit(
+          "message",
+          formatMessage({ user: user.name, type, text: message })
+        );
+
+        if (to) {
+          const msgToQ = {
+            conversationId: [String(to.id), String(userId)].sort().join("-"),
+            from: userId,
+            to: to.id,
+            type,
+            message,
+          };
+          // publishToQueue(msgToQ);
+          await repositories.chatRepository.add(msgToQ);
+        }
+
+        callback();
       }
-
-      callback();
-    });
-
-    // socket.on("disconnect", () => {
-    //   console.log("disconnect");
-
-    //   const user = leaveRoom(socket.id);
-
-    //   io.emit("roomData", {
-    //     users: getUsersInWaitingRoom(),
-    //   });
-    // });
+    );
 
     socket.on("getRoom", async () => {
       const userInWaitingRoom = await getUsersInWaitingRoom();

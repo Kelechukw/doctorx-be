@@ -6,6 +6,10 @@ export default class extends BaseRepo {
     this.Model = Model;
   }
 
+  async getAllMsgs(conversationId) {
+    return this.all({ conversationId });
+  }
+
   async getAllConversation(id) {
     const pipeline = [
       {

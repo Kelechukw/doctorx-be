@@ -17,6 +17,7 @@ const chatSchema = new Schema(
     message: {
       type: String,
     },
+    type: String,
   },
   {
     versionKey: false,

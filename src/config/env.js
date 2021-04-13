@@ -13,6 +13,8 @@ const config = {
   AMQPURL: process.env.AMQP_URL,
   redisHost: process.env.REDISCACHEHOSTNAME,
   redisPass: process.env.REDISCACHEKEY,
+  AWSAccessKey: process.env.AWSAccessKey,
+  secretAccessKey: process.env.secretAccessKey,
 };
 
 module.exports = config;
