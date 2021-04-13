@@ -1,4 +1,4 @@
-const getAllMsgs = ({ chatRepository }) => async ({ conversationId }) => {
+const getAllMsgs = ({ chatRepository }) => async (conversationId) => {
   try {
     const conversations = await chatRepository.getAllMsgs(conversationId);
 
