@@ -4,7 +4,6 @@ import {
   getUsersInWaitingRoom,
   leaveRoom,
   formatMessage,
-  getUserInRoom,
   getRoom,
   getUser,
 } from "./room";
@@ -93,12 +92,17 @@ const webSocket = (server, repositories) => {
 
     socket.on(
       "sendMessage",
-      async ({ message, room, userId, type }, callback) => {
+      async ({ message, room, userId, type, isRoom }, callback) => {
         const user = await getUser(socket.id);
 
         const usersInRoom = await getRoom(room);
 
-        const to = usersInRoom.find((user) => user.id !== userId);
+        let to;
+        if (isRoom) {
+          to = usersInRoom.find((user) => user.id !== userId);
+        } else {
+          to = room.split("-").find((a) => a !== userId);
+        }
 
         io.to(room).emit(
           "message",

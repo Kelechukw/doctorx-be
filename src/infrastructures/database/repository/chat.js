@@ -12,7 +12,7 @@ export default class extends BaseRepo {
       .populate({ path: "to ", select: "firstName lastName -_id" })
       .exec();
 
-    return data.map(({ from, to, message, _id, type, createdAt }) => ({
+    return data.map(({ from, message, _id, type, createdAt }) => ({
       _id,
       user: `${from.firstName} ${from.lastName}`,
       message,
