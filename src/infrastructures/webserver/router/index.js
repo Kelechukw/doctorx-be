@@ -15,10 +15,6 @@ const routerFunc = (repositories) => {
   const router = express.Router();
   const apiRouter = express.Router();
 
-  apiRouter.get("/", (req, res) => {
-    res.send("doctorx");
-  });
-
   apiRouter.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
   apiRouter.use("/auth", userRouter(repositories));
@@ -45,6 +41,9 @@ const routerFunc = (repositories) => {
   apiRouter.use("/", auth(repositories), chatRouter(repositories));
 
   router.use("/api", apiRouter);
+  router.get("/", (req, res) => {
+    res.send("doctorx");
+  });
 
   return router;
 };
