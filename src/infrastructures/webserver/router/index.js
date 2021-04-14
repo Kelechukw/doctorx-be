@@ -15,6 +15,10 @@ const routerFunc = (repositories) => {
   const router = express.Router();
   const apiRouter = express.Router();
 
+  apiRouter("/", (req, res) => {
+    res.send("doctorx");
+  });
+
   apiRouter.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
   apiRouter.use("/auth", userRouter(repositories));
