@@ -68,7 +68,7 @@ exports.getUsersInWaitingRoom = async () => {
   for (let room in rooms) {
     const users = rooms[room];
     if (users.length === 1) {
-      if (users[0].userRole === "doctor" && users[0].isRoom === true) continue;
+      if (users[0].userRole === "doctor" || users[0].isRoom === false) continue;
       waitingRoom.push(JSON.parse(users[0]));
     }
   }
