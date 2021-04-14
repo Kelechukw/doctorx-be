@@ -99,7 +99,6 @@ const webSocket = (server, repositories) => {
 
         const usersInRoom = await getRoom(room);
 
-        console.log(isRoom);
         let to = {};
         if (isRoom) {
           to = usersInRoom.find((user) => user.id !== userId);

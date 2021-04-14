@@ -34,6 +34,7 @@ const getAllConversation = ({ chatRepository, userRepository }) => async ({
             id: docId,
             message: doc.message,
             conversationWith: `${conversationWith.firstName} ${conversationWith.lastName}`,
+            from,
             timestamp: doc.timestamp,
           };
 
@@ -51,6 +52,7 @@ const getAllConversation = ({ chatRepository, userRepository }) => async ({
         doc = {
           id: docId,
           message: doc.message,
+          from,
           conversationWith: `${conversationWith.firstName} ${conversationWith.lastName}`,
           timestamp: doc.timestamp,
         };
