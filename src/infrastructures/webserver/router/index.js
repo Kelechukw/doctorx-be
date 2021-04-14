@@ -42,7 +42,7 @@ const routerFunc = (repositories) => {
 
   router.use("/api", apiRouter);
   router.get("/", (req, res) => {
-    res.send("doctorx");
+    res.status(200).json({ app: "doctorX" });
   });
 
   return router;

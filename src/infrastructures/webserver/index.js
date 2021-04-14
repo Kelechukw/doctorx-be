@@ -1,5 +1,5 @@
 import express from "express";
-import secure from "express-force-https";
+// import secure from "express-force-https";
 import cors from "cors";
 import http from "http";
 import webSocketWorker from "../websocket";
@@ -12,7 +12,7 @@ export default (router) => {
   const app = express();
 
   app.disable("x-powered-by");
-  app.use(secure).use(cors());
+  app.use(cors());
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
