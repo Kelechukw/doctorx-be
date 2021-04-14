@@ -14,8 +14,7 @@ export default class extends BaseRepo {
 
     return data.map(({ from, to, message, _id, type, createdAt }) => ({
       _id,
-      from: `${from.firstName} ${from.lastName}`,
-      to: `${to.firstName} ${to.lastName}`,
+      user: `${from.firstName} ${from.lastName}`,
       message,
       type,
       createdAt,
