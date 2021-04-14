@@ -7,7 +7,19 @@ export default class extends BaseRepo {
   }
 
   async getAllMsgs(conversationId) {
-    return this.all({ conversationId });
+    const data = await this.Model.find({ conversationId })
+      .populate({ path: "from ", select: "firstName lastName -_id" })
+      .populate({ path: "to ", select: "firstName lastName -_id" })
+      .exec();
+
+    return data.map(({ from, to, message, _id, type, createdAt }) => ({
+      _id,
+      from: `${from.firstName} ${from.lastName}`,
+      to: `${to.firstName} ${to.lastName}`,
+      message,
+      type,
+      createdAt,
+    }));
   }
 
   async getAllConversation(id) {
