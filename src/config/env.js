@@ -15,6 +15,8 @@ const config = {
   redisPass: process.env.REDISCACHEKEY,
   AWSAccessKey: process.env.AWSAccessKey,
   secretAccessKey: process.env.secretAccessKey,
+  awsRegion: process.env.AWS_REGION,
+  useQueue: process.env.USE_QUEUE || false,
 };
 
 module.exports = config;

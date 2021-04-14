@@ -40,10 +40,13 @@ const getAllConversation = ({ chatRepository, userRepository }) => async ({
           resultObj[docId] = doc;
         }
       } else {
-        let _conversationWith = [from, to].find((a) => a !== userId);
-        const conversationWith = await userRepository.findById(
-          _conversationWith
+        let _conversationWith = [from, to].find(
+          (a) => String(a) !== String(userId)
         );
+
+        let conversationWith = {};
+        if (_conversationWith)
+          conversationWith = await userRepository.findById(_conversationWith);
 
         doc = {
           id: docId,

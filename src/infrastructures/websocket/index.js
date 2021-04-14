@@ -8,6 +8,7 @@ import {
   getUser,
 } from "./room";
 import publishToQueue from "../queue/publisher";
+import config from "../../config/env";
 
 const webSocket = (server, repositories) => {
   const io = socketio(server, {
@@ -97,11 +98,12 @@ const webSocket = (server, repositories) => {
 
         const usersInRoom = await getRoom(room);
 
-        let to;
+        console.log(isRoom);
+        let to = {};
         if (isRoom) {
           to = usersInRoom.find((user) => user.id !== userId);
         } else {
-          to = room.split("-").find((a) => a !== userId);
+          to.id = room.split("-").find((a) => a !== userId);
         }
 
         io.to(room).emit(
@@ -117,8 +119,12 @@ const webSocket = (server, repositories) => {
             type,
             message,
           };
-          // publishToQueue(msgToQ);
-          await repositories.chatRepository.add(msgToQ);
+
+          if (config.useQueue) {
+            publishToQueue(msgToQ);
+          } else {
+            await repositories.chatRepository.add(msgToQ);
+          }
         }
 
         callback();
