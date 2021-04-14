@@ -15,7 +15,7 @@ const routerFunc = (repositories) => {
   const router = express.Router();
   const apiRouter = express.Router();
 
-  apiRouter("/", (req, res) => {
+  apiRouter.get("/", (req, res) => {
     res.send("doctorx");
   });
 
