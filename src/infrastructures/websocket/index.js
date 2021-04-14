@@ -27,6 +27,7 @@ const webSocket = (server, repositories) => {
           id: userId,
           name,
           roomId: room,
+          isRoom,
           userRole,
           socketId: socket.id,
         });

@@ -9,7 +9,14 @@ export const getRoom = async (roomId) => {
   return room ? room.map((d) => JSON.parse(d)) : [];
 };
 
-export const joinRoom = async ({ id, name, roomId, userRole, socketId }) => {
+export const joinRoom = async ({
+  id,
+  name,
+  roomId,
+  isRoom,
+  userRole,
+  socketId,
+}) => {
   name = name.trim().toLowerCase();
   roomId = roomId.trim().toLowerCase();
   userRole = userRole.trim().toLowerCase();
@@ -18,7 +25,7 @@ export const joinRoom = async ({ id, name, roomId, userRole, socketId }) => {
 
   let room = await getRoom(roomId);
 
-  const user = { id, name, roomId, userRole };
+  const user = { id, name, roomId, userRole, isRoom };
   // Save user data to cache
   await cache.hmset(socketId, user);
 
@@ -61,7 +68,7 @@ exports.getUsersInWaitingRoom = async () => {
   for (let room in rooms) {
     const users = rooms[room];
     if (users.length === 1) {
-      if (users[0].userRole === "doctor") continue;
+      if (users[0].userRole === "doctor" && users[0].isRoom === true) continue;
       waitingRoom.push(JSON.parse(users[0]));
     }
   }
