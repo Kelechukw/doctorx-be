@@ -14,6 +14,7 @@ const router = Router(repositories);
 const webserver = server(router);
 
 const start = async () => {
+  
   webserver.start();
   webserver.startWebsocket(repositories);
 };
