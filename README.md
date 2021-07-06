@@ -8,7 +8,7 @@
 Clone the repo and
 
 ```bash
-git clone https://github.com/Ethical-Ralph/doctorX.git
+https://github.com/Kelechukw/doctorx-be.git
 cd doctorX
 ```
 
